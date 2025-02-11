@@ -1,12 +1,12 @@
-"use client";
+import { Button, Typography, Container } from "@mui/material";
+import Sidebar from "../components/ui/sidebar";
 
-import SidebarMenu from "@/components/ui/sidebar";
-import { ThemeProvider } from "@mui/material";
-
-export default function Home() {
+export default function Page() {
   return (
     <>
-      <SidebarMenu></SidebarMenu>
+      <Sidebar>
+        <h1>This is a large text insiedth panel</h1>
+      </Sidebar>
     </>
   );
 }
