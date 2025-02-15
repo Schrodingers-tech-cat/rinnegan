@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import { useState, useEffect } from "react";
 import "./globals.css";
 import ThemeToggle from "../components/ui/themeToggle";
+import Sidebar from "@/components/layout/sidebar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -18,18 +19,17 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// Create MUI light and dark themes
 const lightTheme = createTheme({
   palette: {
     mode: "light",
     primary: {
-      main: "#1976d2", // Blue color
+      main: "#1976d2",
     },
     secondary: {
-      main: "#dc004e", // Pink color
+      main: "#dc004e",
     },
     background: {
-      default: "#f5f5f5", // Light gray background
+      default: "#f5f5f5",
     },
   },
   typography: {
@@ -41,14 +41,14 @@ const darkTheme = createTheme({
   palette: {
     mode: "dark",
     primary: {
-      main: "#90caf9", // Light blue for dark mode
+      main: "#90caf9",
     },
     secondary: {
-      main: "#f48fb1", // Light pink for dark mode
+      main: "#f48fb1",
     },
     background: {
-      default: "#121212", // Dark background
-      paper: "#1e1e1e", // Darker background for paper components
+      default: "#121212",
+      paper: "#1e1e1e",
     },
   },
   typography: {
@@ -85,9 +85,8 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
-          <CssBaseline /> {/* MUI global styles */}
-          <ThemeToggle toggleTheme={toggleTheme} isDarkMode={isDarkMode} />
-          {children}
+          <CssBaseline />
+          <Sidebar> {children}</Sidebar>
         </ThemeProvider>
       </body>
     </html>
