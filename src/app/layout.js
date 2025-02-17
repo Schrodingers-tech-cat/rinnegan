@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import "./globals.css";
 import ThemeToggle from "../components/ui/themeToggle";
 import Sidebar from "@/components/layout/sidebar";
+import Header from "@/components/layout/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
