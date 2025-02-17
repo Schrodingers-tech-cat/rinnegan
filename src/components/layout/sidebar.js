@@ -1,6 +1,6 @@
 "use client"; // Required for Next.js App Router
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   Drawer,
   Typography,
@@ -22,10 +22,28 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { lightTheme, darkTheme } from "../../styles/themes";
 import Image from "next/image";
 import Link from "next/link";
+import Modal from "../modal/modal";
 
 const Sidebar = ({ children }) => {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const drawerRef = useRef(null);
+  const [isModalOpen, setModalOpen] = useState(true);
+
+  // Function to handle clicks outside the drawer
+  const handleClickOutside = (event) => {
+    if (drawerRef.current && !drawerRef.current.contains(event.target)) {
+      setIsExpanded(false); // Close the drawer
+    }
+  };
+
+  // Add event listener when the component mounts
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   return (
     <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
@@ -37,7 +55,9 @@ const Sidebar = ({ children }) => {
           PaperProps={{
             sx: {
               width: isExpanded ? 250 : 80,
-              backgroundColor: isDarkMode ? "#1e1e1e" : "#fefbee",
+              backgroundColor: isDarkMode
+                ? "rgba(30, 30, 30, 0.5)"
+                : "rgba(254, 251, 238, 0.5)",
               padding: 2,
               overflowX: "hidden",
               transition: "width 0.3s ease-in-out, background-color 0.3s ease",
@@ -59,7 +79,7 @@ const Sidebar = ({ children }) => {
               />
             </IconButton>
 
-            <List>
+            <List className="flex flex-col items-start">
               <Tooltip
                 title="Logistic Panel"
                 placement="right"
@@ -162,7 +182,16 @@ const Sidebar = ({ children }) => {
             minHeight: "95svh",
           }}
         >
-          <Box sx={{ flex: 1, padding: 4, overflowY: "auto", marginLeft: 8 }}>
+          <Box
+            sx={{
+              flex: 1,
+              padding: 4,
+              overflowY: "auto",
+              marginLeft: isExpanded ? 30 : 8,
+              transition: "width 0.3s ease-in-out, all 0.3s ease",
+              alignItems: "center",
+            }}
+          >
             {children}
           </Box>
         </Box>
